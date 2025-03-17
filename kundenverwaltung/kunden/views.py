@@ -1,3 +1,5 @@
+from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.utils import timezone
@@ -7,6 +9,8 @@ from .forms import KundeForm, VermerkForm
 def index(request):
     return render(request, 'kunden/index.html')
 
+@login_required
+@never_cache
 def kunden_uebersicht(request):
     kunden = Kunde.objects.all() # Hole alle Kunden
     firma_filter = request.GET.get('firma', '')
@@ -18,6 +22,8 @@ def kunden_uebersicht(request):
         'firma_filter': firma_filter  # Für die Vorbelegung des Suchfelds
     })
 
+@login_required
+@never_cache
 def vermerk_uebersicht(request):
     vermerk = Vermerk.objects.all() # Hole alle Vermerke
 
@@ -38,14 +44,20 @@ def vermerk_uebersicht(request):
         'firma_filter': firma_filter
     })
 
+@login_required
+@never_cache
 def kunden_detail(request, kunden_nr):
     kunde = get_object_or_404(Kunde, kunden_nr=kunden_nr)
     return render(request, 'kunden/kunden_detail.html', {'kunde': kunde})
 
+@login_required
+@never_cache
 def vermerk_detail(request, gespraechs_id):
     vermerk = get_object_or_404(Vermerk, gespraechs_id=gespraechs_id)
     return render(request, 'kunden/vermerk_detail.html', {'vermerk': vermerk})
 
+@login_required
+@never_cache
 def kunde_neu(request):
     if request.method == "POST":
         form = KundeForm(request.POST)
@@ -56,6 +68,8 @@ def kunde_neu(request):
         form = KundeForm()
     return render(request, 'kunden/kunde_neu.html', {'form': form})
 
+@login_required
+@never_cache
 def kunde_loeschen(request, kunden_nr):
     kunde = get_object_or_404(Kunde, kunden_nr=kunden_nr)
     if request.method == 'POST':
@@ -63,6 +77,8 @@ def kunde_loeschen(request, kunden_nr):
         return redirect('kunden-uebersicht')
     return redirect('kunden-uebersicht')  # Optional: GET-Anfragen ignorieren
 
+@login_required
+@never_cache
 def vermerk_loeschen(request, gespraechs_id):
     vermerk = get_object_or_404(Vermerk, gespraechs_id=gespraechs_id)
     if request.method == 'POST':
@@ -70,6 +86,8 @@ def vermerk_loeschen(request, gespraechs_id):
         return redirect('vermerk-uebersicht')
     return redirect('vermerk-uebersicht')  # Optional: GET-Anfragen ignorieren
 
+@login_required
+@never_cache
 def vermerk_erfassen(request):
     if request.method == "POST":
         form = VermerkForm(request.POST)
@@ -98,6 +116,8 @@ def vermerk_erfassen(request):
         form = VermerkForm(initial=initial_data)
     return render(request, 'kunden/vermerk_erfassen.html', {'form': form})
 
+@login_required
+@never_cache
 def get_kunde_data(request, kunden_nr):
     kunde = get_object_or_404(Kunde, kunden_nr=kunden_nr)
     data = {

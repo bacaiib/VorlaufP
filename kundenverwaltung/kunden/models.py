@@ -9,6 +9,7 @@ class Kunde(models.Model):
     email = models.EmailField(blank=True)
     stadt = models.CharField(max_length=50)
 
+
     def __str__(self):
         return f"{self.firma} ({self.kunden_nr})"
 

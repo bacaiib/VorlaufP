@@ -3,58 +3,60 @@
 {% block title %}Kundenliste{% endblock %}
 
 {% block content %}
+  <div class="list-container">
     <h1>Kundenliste</h1>
     <!-- Filterformular -->
     <form method="get" class="filter-form">
-        <label for="firma">Firma*:</label>
-        <input type="text" name="firma" id="firma" value="{{ firma_filter }}">
-        <button type="submit">Suche</button>
+      <label for="firma">Firma*:</label>
+      <input type="text" name="firma" id="firma" value="{{ firma_filter }}">
+      <button type="submit">Suche</button>
     </form>
 
     <!-- Kundentabelle -->
     <table class="customer-table">
-        <thead>
+      <thead>
+        <tr>
+          <th>Kunde Nr</th>
+          <th>Firma</th>
+          <th>Email</th>
+          <th>Anschrift</th>
+          <th>Stadt</th>
+          <th>Telefon</th>
+          <th>Fax</th>
+          <th>Löschen</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for k in kunden %}
+          {% if k.kunden_nr %}
             <tr>
-                <th>Kunde Nr</th>
-                <th>Firma</th>
-                <th>Email</th>
-                <th>Anschrift</th>
-                <th>Stadt</th>
-                <th>Telefon</th>
-                <th>Fax</th>
-                <th>Löschen</th>
+              <td>{{ k.kunden_nr }}</td>
+              <td><a href="{% url 'kunden-detail' k.kunden_nr %}">{{ k.firma }}</a></td>
+              <td>{{ k.email|default:"-" }}</td>
+              <td>{{ k.anschrift|default:"-" }}</td>
+              <td>{{ k.stadt|default:"-" }}</td>
+              <td>{{ k.telefon_nr|default:"-" }}</td>
+              <td>{{ k.fax_nr|default:"-" }}</td>
+              <td>
+                <form action="{% url 'kunde-loeschen' k.kunden_nr %}" method="post" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="delete-btn" onclick="return confirm('Sind Sie sicher, dass Sie diesen Kunden löschen möchten?');">🗑️</button>
+                </form>
+              </td>
             </tr>
-        </thead>
-        <tbody>
-            {% for k in kunden %}
-                {% if k.kunden_nr %}
-                    <tr>
-                        <td>{{ k.kunden_nr }}</td>
-                        <td><a href="{% url 'kunden-detail' k.kunden_nr %}">{{ k.firma }}</a></td>
-                        <td>{{ k.email|default:"-" }}</td>
-                        <td>{{ k.anschrift|default:"-" }}</td>
-                        <td>{{ k.stadt|default:"-" }}</td>
-                        <td>{{ k.telefon_nr|default:"-" }}</td>
-                        <td>{{ k.fax_nr|default:"-" }}</td>
-                        <td>
-                            <form action="{% url 'kunde-loeschen' k.kunden_nr %}" method="post" style="display:inline;">
-                                {% csrf_token %}
-                                <button type="submit" class="delete-btn" onclick="return confirm('Sind Sie sicher, dass Sie diesen Kunden löschen möchten?');">🗑️</button>
-                            </form>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="8">Fehler: Kunde ohne kunden_nr: {{ k.firma }}</td>
-                    </tr>
-                {% endif %}
-            {% empty %}
-                <tr>
-                    <td colspan="8">Keine Kunden vorhanden.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
+          {% else %}
+            <tr>
+              <td colspan="8">Fehler: Kunde ohne kunden_nr: {{ k.firma }}</td>
+            </tr>
+          {% endif %}
+        {% empty %}
+          <tr>
+            <td colspan="8">Keine Kunden vorhanden.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
     </table>
+  </div>
 {% endblock %}
 
 

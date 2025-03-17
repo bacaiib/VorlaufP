@@ -1,24 +1,123 @@
 /* kunden/static/kunden/css/style.css */
-.filter-form {
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #333;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+.nav {
+    background-color: #444;
+    padding: 10px;
+    text-align: center;  /* Behält die Zentrierung für .nav-center bei */
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+}
+.nav-placeholder {
+    width: 200px; /* Passe die Breite an deine Links an */
+    height: 18px; /* Minimal, um unsichtbar zu sein */
+    visibility: hidden; /* Versteckt den Platzhalter */
+}
+.nav a.nav-button {
+    margin: 0;
+}
+
+/* Sorgt für ein identisches Aussehen von Links und Buttons */
+.nav-button,
+.nav-button:link,
+.nav-button:visited,
+.nav-button:hover,
+.nav-button:active {
+    display: inline-block;
+    width: 80px !important;           /* feste Breite – passe nach Wunsch an */
+    box-sizing: border-box;
+    text-align: center;    /* Text mittig ausrichten */
+    white-space: nowrap;   /* Verhindert Zeilenumbrüche */
+    margin: 0;
+    padding: 2px 8px;       /* Einheitliches Padding */
+    font-size: 14px;         /* Einheitliche Schriftgröße */
+    line-height: 1.2;        /* Einheitliche Zeilenhöhe */
+    color: #000;             /* schwarze Schrift */
+    background-color: #fff;  /* weißer Hintergrund */
+    border: 1px solid #000;  /* sichtbarer Rahmen (wenn Du willst) */
+    border-radius: 4px;      /* abgerundete Ecken */
+    cursor: pointer;
+    text-decoration: none;   /* keine Unterstreichung für Links */
+
+    /* Entfernt unterschiedliche Browser-Defaults bei Buttons */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.inline-form {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Optionaler Hover-Effekt für beide */
+.nav-button:hover {
+    background-color: #eee;
+}
+
+/* Hiermit wird der Logout-Button ganz rechts fixiert */
+.nav-logout {
+    position: absolute;
+    right: 30px;   /* Abstand vom rechten Rand */
+    top: 8px;     /* Abstand vom oberen Rand */
+}
+/* Gemeinsamer Container für Listen-Ansichten */
+.list-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 20px;
+    background: #fff;
+    color: #333;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Überschriften im Container */
+.list-container h1 {
+    text-align: center;
     margin-bottom: 20px;
-    text-align: left;
+}
+
+/* Angepasstes Filterformular */
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 .filter-form label {
+    margin: 5px;
     font-weight: bold;
-    margin-right: 10px;
 }
 
-.filter-form input {
+.filter-form input,
+.filter-form select {
     padding: 5px;
-    width: 200px;
-    margin-right: 10px;
+    margin: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
+/* Angepasster Button im Filterformular */
 .filter-form button {
     padding: 5px 15px;
+    margin: 5px;
     background-color: #444;
     color: #fff;
     border: none;
@@ -26,30 +125,31 @@
     cursor: pointer;
 }
 
+/* Verbesserte Tabellen-Darstellung */
 .customer-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
-.customer-table th {
+/* Kopfzeile hervorheben */
+.customer-table thead th {
+    padding: 12px 10px;
     background-color: #444;
     color: #fff;
-    padding: 10px;
     text-align: left;
+    border-bottom: 2px solid #ccc;
 }
 
-.customer-table td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+/* Tabellenzellen in tbody, dezente Trennung */
+.customer-table tbody td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #eee;
 }
 
-.customer-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-.customer-table tr:nth-child(odd) {
-    background-color: #fff;
+/* Letzte Zeile ohne untere Linie */
+.customer-table tbody tr:last-child td {
+    border-bottom: none;
 }
 
 .customer-table a {
@@ -57,6 +157,7 @@
     text-decoration: underline;
 }
 
+/* Delete Button bleibt unverändert */
 .delete-btn {
     background-color: transparent;
     border: none;
@@ -64,7 +165,88 @@
     cursor: pointer;
     font-size: 16px;
 }
-
 .delete-btn:hover {
     color: #c82333;
 }
+
+/* Zusätzliche Styles für strukturierte Formulare */
+.form-container {
+    max-width: 600px;
+    margin: 60px auto;
+    background: #fff;
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.form-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container form p {
+    margin-bottom: 15px;
+}
+
+/* Optional: Styles für Labels und Inputs (funktionieren, wenn du nicht nur form.as_p nutzt) */
+.form-container label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+.form-container input,
+.form-container textarea,
+.form-container select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+/* Button Style innerhalb des Formulars */
+.form-container button {
+    width: 120px;
+    padding: 10px;
+    font-size: 16px;
+    margin: 20px auto 0 auto;
+    display: block;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.form-container button:hover {
+    background-color: #555;
+}
+
+/* Styles für Detailansichten (z.B. Kunden- oder Vermerkansicht) */
+.details-container {
+    max-width: 800px;
+    margin: 60px auto;
+    background: #fff;
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.details-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.details-container p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+
+

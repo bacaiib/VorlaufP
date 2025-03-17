@@ -3,64 +3,66 @@
 {% block title %}Kundenliste{% endblock %}
 
 {% block content %}
-        <h1>Gesprächsliste</h1>
-        <!-- Filterformular -->
-        <form method="get">
-            <label for="wunsch">Wunsch:</label>
-            <select name="wunsch" id="wunsch">
-                <option value="">Alle</option>
-                {% for choice in wunsch_choices %}
-                    <option value="{{ choice.0 }}" {% if wunsch_filter == choice.0 %}selected{% endif %}>
-                        {{ choice.1 }}
-                    </option>
-                {% endfor %}
-            </select>
+  <div class="list-container">
+    <h1>Gesprächsliste</h1>
+    <!-- Filterformular -->
+    <form method="get" class="filter-form">
+      <label for="wunsch">Wunsch:</label>
+      <select name="wunsch" id="wunsch">
+        <option value="">Alle</option>
+        {% for choice in wunsch_choices %}
+          <option value="{{ choice.0 }}" {% if wunsch_filter == choice.0 %}selected{% endif %}>
+            {{ choice.1 }}
+          </option>
+        {% endfor %}
+      </select>
 
-            <label for="firma">Firma:</label>
-            <input type="text" name="firma" id="firma" value="{{ firma_filter }}">
+      <label for="firma">Firma:</label>
+      <input type="text" name="firma" id="firma" value="{{ firma_filter }}">
 
-            <button type="submit">Filtern</button>
-        </form>
+      <button type="submit">Filtern</button>
+    </form>
 
-        <!-- Vermerktabelle -->
-        <table class="customer-table">
-            <thead>
-                <tr>
-                    <th>Gesprächs ID</th>
-                    <th>Name</th>
-                    <th>Betreff</th>
-                    <th>Wunsch</th>
-                    <th>Datum/Uhrzeit</th>
-                    <th>Löschen</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for v in vermerke %}
-                    {% if v.gespraechs_id %}
-                        <tr>
-                            <td><a href="{% url 'vermerk-detail' v.gespraechs_id %}">{{ v.gespraechs_id }}</a></td>
-                            <td>{{ v.name|default:"-" }}</td>
-                            <td>{{ v.betreff|default:"-" }}</td>
-                            <td>{{ v.wunsch|default:"-" }}</td>
-                            <td>{{ v.datum }} {{ v.uhrzeit|date:"H:i" }}</td>
-                            <td>
-                                <form action="{% url 'vermerk-loeschen' v.gespraechs_id %}" method="post" style="display:inline;">
-                                    {% csrf_token %}
-                                    <button type="submit" class="delete-btn" onclick="return confirm('Sind Sie sicher, dass Sie diesen Vermerk löschen möchten?');">🗑️</button>
-                                </form>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="5">Fehler: Vermerk ohne gespreachs_id: {{ v.gespreachs_id }}</td>
-                        </tr>
-                    {% endif %}
-                {% empty %}
-                    <tr>
-                        <td colspan="5">Keine Vermerke vorhanden.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <!-- Vermerktabelle -->
+    <table class="customer-table">
+      <thead>
+        <tr>
+          <th>Gesprächs ID</th>
+          <th>Name</th>
+          <th>Betreff</th>
+          <th>Wunsch</th>
+          <th>Datum/Uhrzeit</th>
+          <th>Löschen</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for v in vermerke %}
+          {% if v.gespraechs_id %}
+            <tr>
+              <td><a href="{% url 'vermerk-detail' v.gespraechs_id %}">{{ v.gespraechs_id }}</a></td>
+              <td>{{ v.name|default:"-" }}</td>
+              <td>{{ v.betreff|default:"-" }}</td>
+              <td>{{ v.wunsch|default:"-" }}</td>
+              <td>{{ v.datum }} {{ v.uhrzeit|date:"H:i" }}</td>
+              <td>
+                <form action="{% url 'vermerk-loeschen' v.gespraechs_id %}" method="post" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="delete-btn" onclick="return confirm('Sind Sie sicher, dass Sie diesen Vermerk löschen möchten?');">🗑️</button>
+                </form>
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="5">Fehler: Vermerk ohne gespreachs_id: {{ v.gespreachs_id }}</td>
+            </tr>
+          {% endif %}
+        {% empty %}
+          <tr>
+            <td colspan="5">Keine Vermerke vorhanden.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
 

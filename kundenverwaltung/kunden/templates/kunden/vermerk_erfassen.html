@@ -1,47 +1,16 @@
 {% extends "kunden/index.html" %}
 
-{% block title %}Kundenübersicht{% endblock %}
+{% block title %}Notiz erfassen{% endblock %}
 
 {% block content %}
-        <head><title>Notiz erfassen</title></head>
-    <body>
-        <h1>Notiz erfassen</h1>
-        <form method="post" id="vermerk-form">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Speichern</button>
-<!--            <a href="{% url 'index' %}">zurück zur Startseite</a>-->
-        </form>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const firmenIdSelect = document.querySelector('#id_firmen_id');
-                const firmaInput = document.querySelector('#id_firma');
-                const anschriftInput = document.querySelector('#id_anschrift');
-                const telefonNrInput = document.querySelector('#id_telefon_nr');
-                const faxNrInput = document.querySelector('#id_fax_nr');
-
-                firmenIdSelect.addEventListener('change', function() {
-                    const kundenNr = this.value;
-                    if (kundenNr && kundenNr !== 'new' && kundenNr !== '') {
-                        fetch(`/kunde/data/${kundenNr}/`)
-                            .then(response => response.json())
-                            .then(data => {
-                                firmaInput.value = data.firma || '';
-                                anschriftInput.value = data.anschrift || '';
-                                telefonNrInput.value = data.telefon_nr || '';
-                                faxNrInput.value = data.fax_nr || '';
-                            })
-                            .catch(error => console.error('Fehler:', error));
-                    } else {
-                        firmaInput.value = '';
-                        anschriftInput.value = '';
-                        telefonNrInput.value = '';
-                        faxNrInput.value = '';
-                    }
-                });
-            });
-        </script>
-    </body>
+  <div class="form-container">
+    <h1>Notiz erfassen</h1>
+    <form method="post" id="vermerk-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Speichern</button>
+    </form>
+  </div>
 {% endblock %}
 
 
