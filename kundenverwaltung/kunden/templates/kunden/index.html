@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Meine App{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'kunden/css/style.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333; /* Dunkler Hintergrund für die ganze Seite */
+            color: #fff; /* Weiße Schrift */
+            margin: 0;
+            padding: 0;
+        }
+        .nav {
+            background-color: #444; /* Etwas hellerer Hintergrund für die Navigation */
+            padding: 10px;
+            text-align: center;
+            position: fixed; /* Fixiert die Navigationsleiste oben */
+            top: 0;
+            width: 100%;
+        }
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        .container {
+            background-color: #f5f5f5; /* Heller Bereich für den Inhalt */
+            color: #333; /* Dunkle Schrift im Inhalt */
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 1200px;
+            margin: 60px auto 20px auto; /* Abstand oben für die fixe Navigation */
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="{% url 'kunden-uebersicht' %}">Kundenliste</a>
+        <a href="{% url 'vermerk-uebersicht' %}">Gesprächsliste</a>
+        <a href="{% url 'vermerk-erfassen' %}">Notiz erfassen</a>
+        <a href="{% url 'kunde-neu' %}">Neuen Kunden anlegen</a>
+    </div>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>Startseite</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Willkommen</h1>-->
+<!--    <h2>Navigation</h2>-->
+<!--    <ul>-->
+<!--        <li><a href="{% url 'kunden-uebersicht' %}">Kundenübersicht</a></li>-->
+<!--        <li><a href="{% url 'vermerk-uebersicht' %}">Vermerkübersicht</a></li>-->
+<!--        <li><a href="{% url 'vermerk-erfassen' %}">Vermerk erfassen</a></li>-->
+<!--        <li><a href="{% url 'kunde-neu' %}">Neuen Kunde anlegen</a></li>-->
+<!--    </ul>-->
+<!--</body>-->
+<!--</html>-->
+

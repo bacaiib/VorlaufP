@@ -1,0 +1,26 @@
+{% extends "kunden/index.html" %}
+
+{% block title %}Neuen Kunden anlegen{% endblock %}
+
+{% block content %}
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<head><title>Vermerk {{ vermerk.gespraechs_id }}</title></head>
+<body>
+    <h1>Vermerk ID {{vermerk.gespraechs_id }} für {{ vermerk.firmen_id.firma }}</h1>
+    <p>Erstellt am: {{vermerk.datum }}, um: {{ vermerk.uhrzeit|date:"H:i" }}</p>
+    <p>Kontaktart: {{vermerk.kontaktart }}</p>
+    <p>Anrede: {{vermerk.anrede }}</p>
+    <p>Name: {{ vermerk.name }}</p>
+    <p>Betreff: {{ vermerk.betreff }}</p>
+    <p>Wunsch: {{ vermerk.wunsch }}</p>
+    <p>Gesprächsinhalt: {{vermerk.gespraechsinhalt }}</p>
+    <p>Aufgenommen: {{vermerk.aufgenommen }}</p>
+    <p>Verfügung: {{vermerk.verfuegung }}</p>
+    <p>Gesprächsinhalt: {{vermerk.gespraechsinhalt }}</p>
+    <p>Email (Kunde): {{vermerk.firmen_id.email }}</p>
+    <p>Telefonnr (Kunde): {{vermerk.firmen_id.telefon_nr }}</p>
+<!--    <a href="{% url 'vermerk-uebersicht' %}">Zurück</a>-->
+</body>
+<!--</html>-->
+{% endblock %}

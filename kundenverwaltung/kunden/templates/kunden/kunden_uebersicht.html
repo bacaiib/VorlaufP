@@ -1,0 +1,93 @@
+{% extends "kunden/index.html" %}
+
+{% block title %}Kundenliste{% endblock %}
+
+{% block content %}
+    <h1>Kundenliste</h1>
+    <!-- Filterformular -->
+    <form method="get" class="filter-form">
+        <label for="firma">Firma*:</label>
+        <input type="text" name="firma" id="firma" value="{{ firma_filter }}">
+        <button type="submit">Suche</button>
+    </form>
+
+    <!-- Kundentabelle -->
+    <table class="customer-table">
+        <thead>
+            <tr>
+                <th>Kunde Nr</th>
+                <th>Firma</th>
+                <th>Email</th>
+                <th>Anschrift</th>
+                <th>Stadt</th>
+                <th>Telefon</th>
+                <th>Fax</th>
+                <th>Löschen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k in kunden %}
+                {% if k.kunden_nr %}
+                    <tr>
+                        <td>{{ k.kunden_nr }}</td>
+                        <td><a href="{% url 'kunden-detail' k.kunden_nr %}">{{ k.firma }}</a></td>
+                        <td>{{ k.email|default:"-" }}</td>
+                        <td>{{ k.anschrift|default:"-" }}</td>
+                        <td>{{ k.stadt|default:"-" }}</td>
+                        <td>{{ k.telefon_nr|default:"-" }}</td>
+                        <td>{{ k.fax_nr|default:"-" }}</td>
+                        <td>
+                            <form action="{% url 'kunde-loeschen' k.kunden_nr %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="delete-btn" onclick="return confirm('Sind Sie sicher, dass Sie diesen Kunden löschen möchten?');">🗑️</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">Fehler: Kunde ohne kunden_nr: {{ k.firma }}</td>
+                    </tr>
+                {% endif %}
+            {% empty %}
+                <tr>
+                    <td colspan="8">Keine Kunden vorhanden.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head><title>Kundenübersicht</title></head>-->
+<!--<body>-->
+<!--    <h1>Kundenübersicht</h1>-->
+<!--        &lt;!&ndash; Filterformular &ndash;&gt;-->
+<!--    <form method="get">-->
+<!--        <label for="firma">Suche nach Firma:</label>-->
+<!--        <input type="text" name="firma" id="firma" value="{{ firma_filter }}">-->
+<!--        <button type="submit">Filtern</button>-->
+<!--    </form>-->
+<!--      <ul>-->
+<!--        {% for k in kunden %}-->
+<!--            {% if k.kunden_nr %}-->
+<!--                <li>-->
+<!--                    <a href="{% url 'kunden-detail' k.kunden_nr %}">{{ k.firma }}</a>-->
+<!--                    <form action="{% url 'kunde-loeschen' k.kunden_nr %}" method="post" style="display:inline;">-->
+<!--                        {% csrf_token %}-->
+<!--                        <button type="submit" onclick="return confirm('Sind Sie sicher, dass Sie diesen Kunden löschen möchten?');">Löschen</button>-->
+<!--                    </form>-->
+<!--                </li>-->
+<!--            {% else %}-->
+<!--                <li>Fehler: Kunde ohne kunden_nr: {{ k.firma }}</li>-->
+<!--            {% endif %}-->
+<!--        {% empty %}-->
+<!--            <li>Keine Kunden vorhanden.</li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--    <a href="{% url 'kunde-neu' %}">Neuer Kunde</a>-->
+<!--    <a href="{% url 'index' %}">zurück zur Startseite</a>-->
+<!--</body>-->
+<!--</html>-->

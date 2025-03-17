@@ -1,0 +1,20 @@
+{% extends "kunden/index.html" %}
+
+{% block title %}Neuen Kunden anlegen{% endblock %}
+
+{% block content %}
+<!--<!DOCTYPE html>-->
+    <html>
+    <head><title>Kunde {{ kunde.kunden_nr }}</title></head>
+    <body>
+        <h1>{{ kunde.firma }}</h1>
+        <p>Anschrift: {{ kunde.anschrift }}</p>
+        <p>Telefon: {{ kunde.telefon_nr }}</p>
+        <p>Fax: {{ kunde.fax_nr }}</p>
+        <p>Email: {{ kunde.email }}</p>
+        <p>Stadt: {{ kunde.stadt }}</p>
+<!--        <a href="{% url 'kunden-uebersicht' %}">Zurück</a>-->
+<!--        <a href="{% url 'index' %}">zurück zur Startseite</a>-->
+    </body>
+<!--</html>-->
+{% endblock %}
